@@ -13,6 +13,11 @@ const EditorWrap = styled.div`
     border-radius: 10px;    
     box-sizing: border-box;
 
+    input:focus,
+    textarea:focus {
+        outline: 1px solid blue;
+    }
+
     .editor-header {
         display: flex;
         justify-content: space-between;
@@ -46,6 +51,27 @@ const EditorWrap = styled.div`
             border: 1px solid skyblue;
             box-sizing: border-box;
             height: auto;
+        }
+    }
+
+    .editor-btn {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0.5rem 1rem;
+
+        button {
+            border: 1px solid skyblue;
+            background-color: skyblue;
+            color: #ffffff;
+            padding: 0.75rem 1rem;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            transform: scale(1.1);
         }
     }
 
