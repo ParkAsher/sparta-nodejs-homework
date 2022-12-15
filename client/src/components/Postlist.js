@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment/moment';
 
 /* assets */
-import { PostlistContainer, PostlistWrap } from '../assets/PostListStyle.js';
+import { PostBtnWrap, PostlistContainer, PostlistWrap } from '../assets/PostListStyle.js';
 
 function Postlist() {
 
@@ -32,6 +32,9 @@ function Postlist() {
 
     return (
         <PostlistContainer>
+            <PostBtnWrap>
+                <button onClick={() => window.location.href = "/write"}>글쓰기</button>
+            </PostBtnWrap>
             {postlist.map((post, idx) => {
                 return (
                     <PostlistWrap key={idx}>

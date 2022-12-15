@@ -63,4 +63,27 @@ const PostlistWrap = styled.div`
     }
 `;
 
-export { PostlistContainer, PostlistWrap };
+const PostBtnWrap = styled.div`
+    width: 1024px;
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+        border: 1px solid skyblue;
+        box-sizing: border-box;
+        background-color: skyblue;
+        color: #ffffff;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+
+    @media (max-width: 1024px) {
+        width: 100%;
+    }
+`;
+
+export { PostlistContainer, PostlistWrap, PostBtnWrap };
