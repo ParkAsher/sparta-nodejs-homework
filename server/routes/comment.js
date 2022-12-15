@@ -79,6 +79,8 @@ router.put("/comments/edit", async (req, res) => {
     let commentId = req.query.id;
     let password = req.query.password;
 
+    console.log(commentId, password);
+
     let body = {
         author: req.body.author,
         content: req.body.content,

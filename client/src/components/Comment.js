@@ -119,7 +119,7 @@ function Comment(props) {
                     window.location.reload();
                 }
             }).catch((err) => {
-                alert(err.res.data.msg);
+                alert(err.response.data.msg);
             })
 
         }

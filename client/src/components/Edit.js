@@ -52,7 +52,7 @@ function Edit() {
                 window.location.href = `/post/${params.postNum}`;
             }
         }).catch((err) => {
-            alert(err.res.data.msg);
+            alert(err.response.data.msg);
         })
     }
 
