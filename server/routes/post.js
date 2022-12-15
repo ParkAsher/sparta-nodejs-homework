@@ -57,10 +57,7 @@ router.delete("/delete", async (req, res) => {
     let postNum = req.query.id;
     let password = req.query.password;
 
-    console.log(postNum, password)
-
     const post = await Post.findOne({ postNum: postNum });
-    console.log(post);
     if (post.length) {
         return res.status(200).json({ success: false, msg: "게시글이 존재하지 않습니다." })
     }
@@ -72,6 +69,34 @@ router.delete("/delete", async (req, res) => {
     Post.deleteOne({ postNum: postNum }).exec().then(() => {
         res.status(200).json({ success: true, msg: "삭제에 성공했습니다." })
     });
+})
+
+// 게시글 글 수정
+router.put("/edit", async (req, res) => {
+    let postNum = req.query.id;
+    let password = req.query.password;
+
+    let body = {
+        author: req.body.author,
+        title: req.body.title,
+        content: req.body.title
+    }
+
+    const post = await Post.findOne({ postNum: postNum });
+    if (post.length) {
+        return res.status(200).json({ success: false, msg: "게시글이 존재하지 않습니다." })
+    }
+
+    if (password !== post.password) {
+        return res.status(200).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
+    }
+
+    body.password = password;
+
+    Post.updateOne({ postNum: postNum }, body).exec().then(() => {
+        res.status(200).json({ success: true, msg: "수정에 성공했습니다." })
+    })
+
 })
 
 module.exports = router;

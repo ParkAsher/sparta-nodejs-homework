@@ -86,7 +86,7 @@ function Detail() {
                 : ""
             }
             <DetailBtnWrap>
-                <button className='btn-edit'>수정</button>
+                <button className='btn-edit' onClick={() => window.location.href = `/edit/${postInfo.postNum}`}>수정</button>
                 <button className='btn-delete' onClick={() => postDelete()}>삭제</button>
             </DetailBtnWrap>
         </DetailContainer>
