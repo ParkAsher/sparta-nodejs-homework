@@ -85,9 +85,6 @@ router.put("/comments/edit", async (req, res) => {
         postNum: req.body.postNum
     }
 
-    console.log(commentId, password)
-    console.log(body)
-
     if (!commentId || !password) {
         return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
     }
