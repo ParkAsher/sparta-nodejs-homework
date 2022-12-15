@@ -35,6 +35,7 @@ function Edit() {
 
         let postNum = params.postNum;
 
+
         if (author === "" || password === "" || title === "" || content === "") {
             return alert("모든 항목을 채워주세요!")
         }
@@ -48,12 +49,10 @@ function Edit() {
         axios.put("/api/posts/edit?id=" + postNum + "&password=" + password, body).then((res) => {
             if (res.data.success) {
                 alert(res.data.msg);
-                window.location.href = `/post/${postNum}`;
-            } else {
-                alert(res.data.msg);
+                window.location.href = `/post/${params.postNum}`;
             }
         }).catch((err) => {
-            console.log(err);
+            alert(err.res.data.msg);
         })
     }
 
@@ -68,8 +67,8 @@ function Edit() {
                     <input id='author' value={author} type="text" placeholder="작성자" onChange={(e) => setAuthor(e.target.value)}></input>
                 </div>
                 <div className='editor-body'>
-                    <input id="title" value={title} type="text" placeholder="제목" onChange={(e) => setTitle(e.target.value)}></input>
-                    <textarea rows='10' value={content} id='content' onChange={(e) => setContent(e.target.value)} placeholder="내용"></textarea>
+                    <input id="title" type="text" placeholder="제목" onChange={(e) => setTitle(e.target.value)}></input>
+                    <textarea rows='10' id='content' onChange={(e) => setContent(e.target.value)} placeholder="내용"></textarea>
                 </div>
             </EditWrap>
             <EditPwInput>

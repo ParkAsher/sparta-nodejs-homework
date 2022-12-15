@@ -87,11 +87,15 @@ router.put("/posts/edit", async (req, res) => {
     let body = {
         author: req.body.author,
         title: req.body.title,
-        content: req.body.title
+        content: req.body.content
+    }
+
+    if (!postNum || !password) {
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지않습니다." })
     }
 
     if (body.content === "" || !body.content) {
-        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+        return res.status(400).json({ success: false, msg: "게시글 내용을 입력해주세요." })
     }
 
     const post = await Post.findOne({ postNum: postNum });

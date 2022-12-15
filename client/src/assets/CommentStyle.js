@@ -90,6 +90,17 @@ const CommentWrap = styled.div`
         }        
     }
 
+    .comment-content-wrap {
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            resize: none;
+            border: 1px solid skyblue;
+            box-sizing: border-box;
+            height: auto;
+        }
+    }
+
     .comment-btn-wrap {
         display: flex;
         justify-content: flex-end;
@@ -114,6 +125,12 @@ const CommentWrap = styled.div`
             border: 1px solid red;
             background-color: red;
         }
+
+        .btn-cancel {
+            border: 1px solid skyblue;
+            color: skyblue !important;
+            background-color: #ffffff;
+        }
     }
     input {
         padding: 1rem;
@@ -126,9 +143,13 @@ const CommentWrap = styled.div`
         width: 100%;
 
         .comment-title-wrap {
+            padding: 0.75rem;
             p {
                 font-size: 0.825rem;
             }
+        }
+        .comment-content-wrap {
+            padding: 0.75rem;
         }
     }
 `;

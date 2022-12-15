@@ -74,4 +74,45 @@ router.delete("/comments/delete", async (req, res) => {
 
 })
 
+// 댓글 수정
+router.put("/comments/edit", async (req, res) => {
+    let commentId = req.query.id;
+    let password = req.query.password;
+
+    let body = {
+        author: req.body.author,
+        content: req.body.content,
+        postNum: req.body.postNum
+    }
+
+    console.log(commentId, password)
+    console.log(body)
+
+    if (!commentId || !password) {
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+    }
+
+    if (body.content === "" || !body.content) {
+        return res.status(400).json({ success: false, msg: "댓글 내용을 입력해주세요." })
+    }
+
+    const comment = await Comment.findOne({ _id: commentId });
+    if (comment.length) {
+        return res.status(400).json({ success: false, msg: "댓글 조회에 실패하였습니다." })
+    }
+
+    if (password !== comment.password) {
+        return res.status(400).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
+    }
+
+    body.password = password;
+
+    Comment.updateOne({ _id: commentId }, body).exec().then(() => {
+        res.status(200).json({ success: true, msg: "수정에 성공했습니다." })
+    }).catch((err) => {
+        res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+    })
+
+})
+
 module.exports = router;
