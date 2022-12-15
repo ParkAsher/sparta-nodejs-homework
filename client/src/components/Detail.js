@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import moment from 'moment/moment';
 
+/* components */
+import Comment from './Comment.js';
+
 /* assets */
 import { DetailBtnWrap, DetailContainer, DetailPwInput, DetailWrap } from '../assets/DetailStyle.js';
 
@@ -17,7 +20,7 @@ function Detail() {
     const getPostDetail = () => {
         let postNum = params.postNum;
 
-        axios.get("/api/post/detail?id=" + postNum).then((res) => {
+        axios.get("/api/posts/detail?id=" + postNum).then((res) => {
             if (res.data.success) {
                 setPostInfo(res.data.postInfo);
             }
@@ -50,7 +53,7 @@ function Detail() {
 
         if (deleteFlag === true && password !== "") {
 
-            axios.delete("/api/post/delete?id=" + postNum + "&password=" + password).then((res) => {
+            axios.delete("/api/posts/delete?id=" + postNum + "&password=" + password).then((res) => {
                 if (res.data.success) {
                     alert(res.data.msg);
                     window.location.href = "/";
@@ -89,6 +92,7 @@ function Detail() {
                 <button className='btn-edit' onClick={() => window.location.href = `/edit/${postInfo.postNum}`}>수정</button>
                 <button className='btn-delete' onClick={() => postDelete()}>삭제</button>
             </DetailBtnWrap>
+            <Comment postNum={params.postNum} />
         </DetailContainer>
     )
 }

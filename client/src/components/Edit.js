@@ -18,7 +18,7 @@ function Edit() {
     const getPostDetail = () => {
         let postNum = params.postNum;
 
-        axios.get("/api/post/detail?id=" + postNum).then((res) => {
+        axios.get("/api/posts/detail?id=" + postNum).then((res) => {
             if (res.data.success) {
                 setAuthor(res.data.postInfo.author);
                 setTitle(res.data.postInfo.title);
@@ -45,7 +45,7 @@ function Edit() {
             content: content
         }
 
-        axios.put("/api/post/edit?id=" + postNum + "&password=" + password, body).then((res) => {
+        axios.put("/api/posts/edit?id=" + postNum + "&password=" + password, body).then((res) => {
             if (res.data.success) {
                 alert(res.data.msg);
                 window.location.href = `/post/${postNum}`;

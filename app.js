@@ -7,8 +7,8 @@ const app = express();
 app.use(express.json());
 
 /* routes */
-app.use("/api/post", require("./server/routes/post.js"));
-app.use("/api/comment", require("./server/routes/comment.js"));
+app.use("/api", require("./server/routes/post.js"));
+app.use("/api", require("./server/routes/comment.js"));
 
 /* MongoDB Connect */
 const connect = require("./server/schemas/index.js");

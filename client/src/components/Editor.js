@@ -28,7 +28,7 @@ function Editor() {
             content: content
         }
 
-        axios.post("/api/post/submit", body).then((res) => {
+        axios.post("/api/posts", body).then((res) => {
             if (res.data.success) {
                 console.log("글 등록 성공!");
                 navigate("/");

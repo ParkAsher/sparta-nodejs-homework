@@ -12,7 +12,7 @@ function Postlist() {
 
     const getPostlist = () => {
 
-        axios.get("/api/post/list").then((res) => {
+        axios.get("/api/posts").then((res) => {
             if (res.data.success) {
                 setPostlist([...res.data.postlist]);
             }
