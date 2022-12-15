@@ -76,8 +76,7 @@ function Comment(props) {
             axios.delete("/api/comments/delete?id=" + commentId + "&password=" + password).then((res) => {
 
             }).catch((err) => {
-                console.log(err);
-                alert("삭제에 실패했습니다.")
+                alert(err.response.data.msg)
             })
         }
     }

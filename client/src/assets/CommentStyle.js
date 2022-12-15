@@ -54,6 +54,7 @@ const CommentInputWrap = styled.div`
             font-weight: bold;
             cursor: pointer;
         }
+
     }
 
     @media (max-width: 1024px) {
@@ -113,6 +114,12 @@ const CommentWrap = styled.div`
             border: 1px solid red;
             background-color: red;
         }
+    }
+    input {
+        padding: 1rem;
+        border: 1px solid skyblue;
+        box-sizing: border-box;
+        border-radius: 10px;
     }
 
     @media (max-width: 1024px) {

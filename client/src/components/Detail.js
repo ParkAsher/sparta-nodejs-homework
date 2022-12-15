@@ -25,7 +25,7 @@ function Detail() {
                 setPostInfo(res.data.postInfo);
             }
         }).catch((err) => {
-            console.log(err);
+            alert(err.response.data.msg)
         })
     }
 
@@ -57,13 +57,9 @@ function Detail() {
                 if (res.data.success) {
                     alert(res.data.msg);
                     window.location.href = "/";
-                } else {
-                    alert(res.data.msg);
-                    window.location.reload();
                 }
             }).catch((err) => {
-                console.log(err);
-                alert("삭제에 실패했습니다.")
+                alert(err.response.data.msg)
             })
         }
     }

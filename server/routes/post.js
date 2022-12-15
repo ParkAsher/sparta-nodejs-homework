@@ -59,9 +59,9 @@ router.delete("/posts/delete", async (req, res) => {
     let postNum = req.query.id;
     let password = req.query.password;
 
-    // if (!postNum || !password) {
-    //     return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
-    // }
+    if (!postNum || !password) {
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+    }
 
     const post = await Post.findOne({ postNum: postNum });
     if (post.length) {
@@ -69,14 +69,13 @@ router.delete("/posts/delete", async (req, res) => {
     }
 
     if (password !== post.password) {
-        //return res.status(400).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
-        throw new Error("비밀번호가 일치하지 않습니다.");
+        return res.status(400).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
     }
 
     Post.deleteOne({ postNum: postNum }).exec().then(() => {
         res.status(200).json({ success: true, msg: "삭제에 성공했습니다." })
     }).catch((err) => {
-        res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+        res.status(400).json({ success: false, msg: "삭제에 실패하였습니다." })
     });
 })
 
@@ -97,11 +96,11 @@ router.put("/posts/edit", async (req, res) => {
 
     const post = await Post.findOne({ postNum: postNum });
     if (post.length) {
-        return res.status(200).json({ success: false, msg: "게시글 조회에 실패하였습니다." })
+        return res.status(400).json({ success: false, msg: "게시글 조회에 실패하였습니다." })
     }
 
     if (password !== post.password) {
-        return res.status(200).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
+        return res.status(400).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
     }
 
     body.password = password;

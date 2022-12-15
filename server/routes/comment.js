@@ -29,7 +29,7 @@ router.post("/comments", (req, res) => {
     postComment.save().then(() => {
         return res.status(200).json({ success: true, msg: "댓글을 생성하였습니다." })
     }).catch((err) => {
-        return res.status(200).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
     })
 })
 
@@ -41,11 +41,37 @@ router.get("/comments", (req, res) => {
         return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
     }
 
-    Comment.find({}).sort({ createdAt: -1 }).exec().then((doc) => {
+    Comment.find({ postNum: postNum }).sort({ createdAt: -1 }).exec().then((doc) => {
         res.status(200).json({ success: true, commentlist: doc })
     }).catch((err) => {
-        res.status(400).json({ success: ture, msg: "데이터 형식이 올바르지 않습니다." })
+        res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
     })
+})
+
+// 댓글 삭제
+router.delete("/comments/delete", async (req, res) => {
+    let commentId = req.query.id;
+    let password = req.query.password;
+
+    if (!commentId || !password) {
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+    }
+
+    const comment = await Comment.findOne({ _id: commentId });
+    if (comment.length) {
+        return res.status(400).json({ success: false, msg: "댓글 조회에 실패하였습니다." })
+    }
+
+    if (password !== comment.password) {
+        return res.status(400).json({ success: false, msg: "비밀번호가 일치하지 않습니다." })
+    }
+
+    Comment.deleteOne({ _id: commentId }).exec().then(() => {
+        res.status(200).json({ success: true, msg: "댓글을 삭제하였습니다." })
+    }).catch((err) => {
+        res.status(400).json({ success: false, msg: "삭제에 실패하였습니다." })
+    })
+
 })
 
 module.exports = router;
