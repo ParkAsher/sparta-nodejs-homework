@@ -45,7 +45,6 @@ const DetailWrap = styled.div`
         }
     }
 
-
     @media (max-width: 1024px) {
         width: 100%;        
 

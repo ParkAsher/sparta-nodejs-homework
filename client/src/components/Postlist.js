@@ -27,7 +27,7 @@ function Postlist() {
     })
 
     const setDate = (date) => {
-        return moment(date).format("YYYY년 MM월 DD일, hh:mm");
+        return moment(date).format("YYYY년 MM월 DD일, HH:mm:ss");
     }
 
     return (

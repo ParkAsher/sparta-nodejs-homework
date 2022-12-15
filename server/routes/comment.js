@@ -33,4 +33,19 @@ router.post("/comments", (req, res) => {
     })
 })
 
+// 댓글 목록 조회
+router.get("/comments", (req, res) => {
+    let postNum = req.query.id;
+
+    if (!postNum) {
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+    }
+
+    Comment.find({}).sort({ createdAt: -1 }).exec().then((doc) => {
+        res.status(200).json({ success: true, commentlist: doc })
+    }).catch((err) => {
+        res.status(400).json({ success: ture, msg: "데이터 형식이 올바르지 않습니다." })
+    })
+})
+
 module.exports = router;

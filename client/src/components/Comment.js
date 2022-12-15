@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import moment from 'moment/moment';
 
 /* assets */
 import { CommentInputWrap, CommentWrap } from '../assets/CommentStyle.js';
@@ -9,6 +10,12 @@ function Comment(props) {
     const [author, setAuthor] = useState("");
     const [password, setPassword] = useState("");
     const [content, setContent] = useState("");
+
+    const [commentList, setCommentList] = useState([]);
+
+    const [deleteCommentId, setDeleteCommentId] = useState("");
+    const [deletePassword, setDeletePassword] = useState("");
+    const [deleteFlag, setDeleteFlag] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -36,7 +43,51 @@ function Comment(props) {
             console.log(err);
         })
 
+    }
 
+    const getCommentsList = () => {
+
+        let postNum = props.postNum;
+
+        axios.get("/api/comments?id=" + postNum).then((res) => {
+            setCommentList([...res.data.commentlist])
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+
+    const commentDelete = () => {
+
+        let commentId = deleteCommentId;
+        let password = deletePassword;
+
+        if (deleteFlag === false) {
+            setDeleteFlag(true);
+            return;
+        }
+
+        if (password === "") {
+            alert("비밀번호를 입력해주세요.");
+            return;
+        }
+
+        if (deleteFlag === true && password !== "" && commentId != "") {
+
+            axios.delete("/api/comments/delete?id=" + commentId + "&password=" + password).then((res) => {
+
+            }).catch((err) => {
+                console.log(err);
+                alert("삭제에 실패했습니다.")
+            })
+        }
+    }
+
+    useEffect(() => {
+        getCommentsList();
+    }, [])
+
+    const setDate = (date) => {
+        return moment(date).format("YYYY년 MM월 DD일, HH:mm:ss");
     }
 
 
@@ -45,7 +96,7 @@ function Comment(props) {
             <CommentInputWrap>
                 <div className='comment-input-header'>
                     <input id='author' type="text" placeholder="작성자" onChange={(e) => setAuthor(e.target.value)}></input>
-                    <input id='password' type="password" placeholder="작성자" onChange={(e) => setPassword(e.target.value)}></input>
+                    <input id='password' type="password" placeholder="비밀번호" onChange={(e) => setPassword(e.target.value)}></input>
                 </div>
                 <div className='comment-input-body'>
                     <textarea rows='5' id='content' placeholder="내용" onChange={(e) => setContent(e.target.value)}></textarea>
@@ -54,9 +105,30 @@ function Comment(props) {
                     <button onClick={(e) => onSubmit(e)}>등록</button>
                 </div>
             </CommentInputWrap>
-            <CommentWrap>
-                {props.postNum}
-            </CommentWrap>
+            {
+                commentList.map((comment, idx) => {
+                    return (
+                        <CommentWrap key={idx}>
+                            <div className='comment-title-wrap'>
+                                <p>{comment.author}</p>
+                                <p>{setDate(comment.createdAt)}</p>
+                            </div>
+                            <div className='comment-content-wrap'>
+                                <p>{comment.content}</p>
+                            </div>
+                            <div className='comment-btn-wrap'>
+                                {
+                                    deleteFlag && (deleteCommentId === comment._id) ?
+                                        <input type="password" onChange={(e) => setDeletePassword(e.target.value)} placeholder="비밀번호"></input>
+                                        : ""
+                                }
+                                <button className='btn-edit'>수정</button>
+                                <button className='btn-delete' onClick={() => { commentDelete(); setDeleteCommentId(comment._id) }} >삭제</button>
+                            </div>
+                        </CommentWrap>
+                    );
+                })
+            }
         </>
     )
 }
