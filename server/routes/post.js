@@ -24,7 +24,7 @@ router.post("/posts", async (req, res) => {
 
     // 글번호 counter
     const counter = await Counter.findOne({ name: "counter" });
-    if (counter.length) {
+    if (!counter) {
         return res.status(400).json({ success: false });
     }
 
@@ -47,6 +47,10 @@ router.post("/posts", async (req, res) => {
 router.get("/posts/detail", async (req, res) => {
     let postNum = req.query.id;
 
+    if (!postNum) {
+        return res.status(400).json({ success: false, msg: "데이터 형식이 올바르지 않습니다." })
+    }
+
     Post.findOne({ postNum: postNum }).exec().then((doc) => {
         res.status(200).json({ success: true, postInfo: doc })
     }).catch((err) => {
@@ -64,7 +68,7 @@ router.delete("/posts/delete", async (req, res) => {
     }
 
     const post = await Post.findOne({ postNum: postNum });
-    if (post.length) {
+    if (!post) {
         return res.status(400).json({ success: false, msg: "게시글이 존재하지 않습니다." })
     }
 
@@ -99,7 +103,7 @@ router.put("/posts/edit", async (req, res) => {
     }
 
     const post = await Post.findOne({ postNum: postNum });
-    if (post.length) {
+    if (!post) {
         return res.status(400).json({ success: false, msg: "게시글 조회에 실패하였습니다." })
     }
 

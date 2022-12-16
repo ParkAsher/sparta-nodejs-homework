@@ -58,7 +58,7 @@ router.delete("/comments/delete", async (req, res) => {
     }
 
     const comment = await Comment.findOne({ _id: commentId });
-    if (comment.length) {
+    if (!comment) {
         return res.status(400).json({ success: false, msg: "댓글 조회에 실패하였습니다." })
     }
 
@@ -96,7 +96,7 @@ router.put("/comments/edit", async (req, res) => {
     }
 
     const comment = await Comment.findOne({ _id: commentId });
-    if (comment.length) {
+    if (!comment) {
         return res.status(400).json({ success: false, msg: "댓글 조회에 실패하였습니다." })
     }
 
